@@ -1,0 +1,28 @@
+<?php 
+
+/**
+ * Gym class
+ */
+
+class Gymfitness
+{
+ use Controller;
+
+    public function index()
+    {
+        // Check if session is set and retrieve the username/email
+        $data['username'] = empty($_SESSION['USER']) ? 'User' : $_SESSION['USER']->email;
+
+        // Load the gym view with data
+        $this->view('gymfitness', $data);
+    }
+
+    public function getAllGymfitness()
+    {
+        $query = "SELECT * FROM gymfitness";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ); // Return as an array of objects
+    }
+
+}
